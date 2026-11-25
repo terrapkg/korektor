@@ -41,7 +41,7 @@ from `../rozbir` when that checkout exists.
 ## CI
 
 as a GitHub Action, in a container that has Terra's repos. hand it the
-output of `anda ci` and it lints only the projects that changed:
+output of `anda ci` so it lints only the projects that changed:
 
 ```yaml
 jobs:

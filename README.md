@@ -34,7 +34,7 @@ Version, and takes the changelog author from `--author` or the Packager tag.
 
 ## install
 
-from Terra with `dnf5 install korektor`, or from source with
+from Terra with `dnf install korektor`, or from source with
 `cabal install exe:korektor`. a source build takes rozbir from Hackage, or
 from `../rozbir` when that checkout exists.
 
@@ -112,8 +112,9 @@ which makes undefined macros really undefined, the way rpmbuild sees them.
 
 ## editors
 
-- [Zed](editors/zed): `zed: install dev extension` on `editors/zed`. highlighting
-  comes from [tree-sitter-rpmspec](https://gitlab.com/cryptomilk/tree-sitter-rpmspec)
+- [Zed](editors/zed): install the `korektor-lsp` extension alongside `rpmspec`,
+  which provides the language and highlighting. for local changes, run
+  `zed: install dev extension` on `editors/zed`
 - [JetBrains IDEs](editors/jetbrains) 2025.2 and newer, through the platform's
   LSP API. `gradle buildPlugin` builds the zip, fetching JDK 21 if needed
 - anything else that speaks LSP: run `korektor lsp` for files ending in `.spec`

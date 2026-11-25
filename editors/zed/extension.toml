@@ -1,21 +1,11 @@
-id = "korektor"
-name = "RPM Spec (korektor)"
+id = "korektor-lsp"
+name = "korektor"
 version = "0.1.0"
 schema_version = 1
 authors = ["Cypress Reed <cypress@fyralabs.com>"]
-description = "RPM spec highlighting, diagnostics, fixes and hovers from korektor"
+description = "RPM spec diagnostics, fixes, hovers and completions from the korektor language server"
 repository = "https://github.com/terrapkg/korektor"
 
 [language_servers.korektor]
 name = "korektor"
 languages = ["RPM Spec"]
-
-[grammars.rpmspec]
-repository = "https://gitlab.com/cryptomilk/tree-sitter-rpmspec"
-rev = "ea82a3995d079055fa08133319a1f22aa68c5b4d"
-path = "rpmspec"
-
-[grammars.rpmbash]
-repository = "https://gitlab.com/cryptomilk/tree-sitter-rpmspec"
-rev = "ea82a3995d079055fa08133319a1f22aa68c5b4d"
-path = "rpmbash"

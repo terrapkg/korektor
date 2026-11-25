@@ -13,7 +13,7 @@ impl zed::Extension for Korektor {
         worktree: &zed::Worktree,
     ) -> Result<zed::Command> {
         let command = worktree.which("korektor").ok_or_else(|| {
-            "korektor isn't on your PATH. install it from Terra with `sudo dnf5 install korektor`"
+            "korektor isn't on your PATH. install it from Terra with `sudo dnf install korektor`"
                 .to_string()
         })?;
         Ok(zed::Command {

@@ -1,0 +1,7 @@
+- id: korektor
+  name: korektor
+  description: lint RPM spec files
+  entry: korektor lint
+  language: system
+  files: \.spec$
+

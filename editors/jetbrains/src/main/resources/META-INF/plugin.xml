@@ -1,0 +1,20 @@
+<idea-plugin>
+    <id>com.fyralabs.korektor</id>
+    <name>RPM Spec (korektor)</name>
+    <vendor url="https://terrapkg.com">Fyra Labs</vendor>
+    <description><![CDATA[
+    RPM spec support backed by the korektor language server: diagnostics,
+    quick fixes, hovers that show what a macro expands to, go to definition,
+    completion and semantic highlighting. Install korektor from Terra with
+    <code>sudo dnf5 install korektor</code>.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lsp</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="RPM Spec" implementationClass="com.fyralabs.korektor.RpmSpecFileType"
+                  fieldName="INSTANCE" language="RPM Spec" extensions="spec"/>
+        <platform.lsp.serverSupportProvider implementation="com.fyralabs.korektor.KorektorLspServerSupportProvider"/>
+    </extensions>
+</idea-plugin>

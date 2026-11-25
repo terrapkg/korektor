@@ -1,0 +1,1 @@
+rulesets = ["core", "rpmlint", "terra"]

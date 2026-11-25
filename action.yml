@@ -1,0 +1,47 @@
+name: korektor
+description: lint the RPM specs a change touches and annotate the pull request
+branding:
+  icon: check-circle
+  color: blue
+
+inputs:
+  anda-ci:
+    description: >-
+      output of `anda ci`, either the raw `build_matrix=[...]` line or the
+      JSON array from a job output. only the projects it lists get linted
+    default: ""
+  paths:
+    description: extra spec files or directories, space separated. defaults to . when anda-ci is empty
+    default: ""
+  args:
+    description: extra arguments for korektor lint, like --ruleset terra or --target f44
+    default: ""
+  fail-on:
+    description: info, warning or error
+    default: warning
+
+runs:
+  using: composite
+  steps:
+    - name: Install korektor
+      shell: bash
+      run: |
+        if ! command -v korektor >/dev/null; then
+          dnf5 -y -q install korektor
+        fi
+
+    - name: Lint
+      shell: bash
+      env:
+        KOREKTOR_ANDA_CI: ${{ inputs.anda-ci }}
+        KOREKTOR_PATHS: ${{ inputs.paths }}
+        KOREKTOR_ARGS: ${{ inputs.args }}
+        KOREKTOR_FAIL_ON: ${{ inputs.fail-on }}
+      run: |
+        read -ra paths <<< "$KOREKTOR_PATHS"
+        read -ra args <<< "$KOREKTOR_ARGS"
+        if [ -n "$KOREKTOR_ANDA_CI" ]; then
+          args+=(--anda-ci -)
+        fi
+        printf '%s\n' "$KOREKTOR_ANDA_CI" |
+          korektor lint --format github --fail-on "$KOREKTOR_FAIL_ON" "${args[@]}" "${paths[@]}"

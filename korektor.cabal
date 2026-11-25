@@ -1,0 +1,89 @@
+cabal-version:   3.0
+name:            korektor
+version:         0.1.0.0
+synopsis:        linter and language server for RPM spec files
+description:
+  korektor lints RPM spec files with rozbir and serves the same diagnostics,
+  fixes, hovers and completions over the language server protocol.
+
+category:        Distribution
+homepage:        https://github.com/terrapkg/korektor
+bug-reports:     https://github.com/terrapkg/korektor/issues
+license:         GPL-3.0-or-later
+license-file:    LICENSE.md
+author:          Cypress Reed
+maintainer:      cypress@fyralabs.com
+build-type:      Simple
+extra-doc-files:
+  CHANGELOG.md
+  README.md
+
+tested-with:     GHC ==9.6.6 || ==9.10.3
+
+source-repository head
+  type:     git
+  location: https://github.com/terrapkg/korektor.git
+
+common shared
+  default-language:   GHC2021
+  default-extensions:
+    DataKinds
+    DeriveAnyClass
+    DerivingStrategies
+    LambdaCase
+    MultiWayIf
+    OverloadedStrings
+    RecordWildCards
+
+  ghc-options:
+    -Wall -Wcompat -Widentities -Wincomplete-uni-patterns
+    -Wincomplete-record-updates -Wredundant-constraints
+
+  build-depends:
+    , aeson        >=2.1.2   && <2.4
+    , base         >=4.18    && <4.21
+    , bytestring   >=0.11.5  && <0.13
+    , containers   >=0.6.7   && <0.8
+    , directory    >=1.3.8   && <1.4
+    , filepath     >=1.4.300 && <1.6
+    , rozbir       >=0.1     && <0.2
+    , text         >=2.0.2   && <2.2
+    , toml-parser  >=2.0.1   && <2.1
+
+common modules
+  hs-source-dirs: src
+  other-modules:
+    Korektor.AndaCi
+    Korektor.Cli
+    Korektor.Config
+    Korektor.Discover
+    Korektor.Lsp
+    Korektor.Output
+    Korektor.Position
+    Korektor.Tools
+    Paths_korektor
+
+  autogen-modules: Paths_korektor
+  build-depends:
+    , lens                  >=5.2    && <5.4
+    , lsp                   >=2.7    && <2.9
+    , lsp-types             >=2.3    && <2.5
+    , mtl                   >=2.3.1  && <2.4
+    , optparse-applicative  >=0.18.1 && <0.20
+    , time                  >=1.12.2 && <1.13
+
+executable korektor
+  import:         shared, modules
+  hs-source-dirs: app
+  main-is:        Main.hs
+  ghc-options:    -threaded -rtsopts
+
+test-suite korektor-test
+  import:         shared, modules
+  type:           exitcode-stdio-1.0
+  hs-source-dirs: test
+  main-is:        Spec.hs
+  ghc-options:    -threaded
+  build-depends:
+    , hspec       >=2.11.9  && <2.12
+    , temporary   >=1.3     && <1.4
